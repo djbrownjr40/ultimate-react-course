@@ -178,9 +178,47 @@ const updatedBook = {
 };
 updatedBook
 
-const summary = `${title} is a ${pages}-page book, was written by ${author}, and published in ${publicationDate.split('-')[0]}. The book has ${hasMovieAdaptation ? '' : "not"} been adapted as a movie.`;
+// arrow functions
+
+// function getYear(str){
+//   return str.split('-')[0];
+// }
+
+// following arrow function is the same as above
+const getYear = (str) => str.split('-')[0];
+console.log(getYear(publicationDate));
+
+const summary = `${title} is a ${pages}-page book, was written by ${author}, and published in ${getYear(publicationDate)}. The book has ${hasMovieAdaptation ? '' : "not"} been adapted as a movie.`;
 summary;
 
 const pagesRange = pages > 1000 ? 'over a thousand' : 'less than a thousand';
 pagesRange;
-console.log(`The book has ${pagesRange} pages`);
+console.log(`The book has ${pagesRange} pages.`);
+
+
+// short-circuting - with &&, when first value is false, automatically returns second value
+console.log(true && 'some string')
+console.log(false && 'some string')
+
+console.log(hasMovieAdaptation && "this book has a movie")
+
+// falsy: 0, '', null, undefined
+
+console.log('Dennis' && "My name is Dennis.")
+
+// or - short-circuits when first value is true
+console.log(true || 'some string')
+console.log(0 || 'some string')
+
+console.log(book.translations.spanish);
+const spanishTranslation = book.translations.spanish || "not translated";
+spanishTranslation
+
+console.log(book.reviews.librarything.reviewsCount); 0
+const countWrong = book.reviews.librarything.reviewsCount || "no data";
+countWrong;
+
+// nullish coalescing operator - short-circuits for falsy values
+
+const count = book.reviews.librarything.reviewsCount ?? "no data";
+count;
