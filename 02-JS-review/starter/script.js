@@ -142,3 +142,45 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// Destructuring Objects
+
+const book = getBook(1);
+book;
+// const title = book.title;
+// title;
+// const author = book.author;
+// author;
+
+const {title, author, pages, publicationDate, genres, hasMovieAdaptation} = book;
+console.log(author, title, genres)
+
+// Destructuring Arrays
+
+// const primaryGenre = genres[0];
+// const secondaryGenre = genres[1];
+
+// primaryGenre takes the first element of the genres array and assign it to primaryGenre variable
+
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+
+console.log(primaryGenre, secondaryGenre, otherGenres)
+
+// ...spread operator takes all values out of array
+const newGenres = [...genres, "epic fantasy"];
+newGenres
+
+// .spread operator can update object with new key-values
+const updatedBook = {
+  ...book,
+  // pages: 1210,
+  moviePublicationDate: '2001-12-19',
+};
+updatedBook
+
+const summary = `${title} is a ${pages}-page book, was written by ${author}, and published in ${publicationDate.split('-')[0]}. The book has ${hasMovieAdaptation ? '' : "not"} been adapted as a movie.`;
+summary;
+
+const pagesRange = pages > 1000 ? 'over a thousand' : 'less than a thousand';
+pagesRange;
+console.log(`The book has ${pagesRange} pages`);
