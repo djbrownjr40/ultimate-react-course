@@ -143,9 +143,10 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
+/*
 // Destructuring Objects
 
-const book = getBook(1);
+const book = getBook(2);
 book;
 // const title = book.title;
 // title;
@@ -214,11 +215,56 @@ console.log(book.translations.spanish);
 const spanishTranslation = book.translations.spanish || "not translated";
 spanishTranslation
 
-console.log(book.reviews.librarything.reviewsCount); 0
-const countWrong = book.reviews.librarything.reviewsCount || "no data";
-countWrong;
+// console.log(book.reviews.librarything.reviewsCount); 0
+// const countWrong = book.reviews.librarything.reviewsCount || "no data";
+// countWrong;
 
 // nullish coalescing operator - short-circuits for falsy values
 
-const count = book.reviews.librarything.reviewsCount ?? "no data";
-count;
+// const count = book.reviews.librarything.reviewsCount ?? "no data";
+// count;
+
+// optional chaining - add ? to make it optional, then add ?? 0 to change from undefined to 0
+
+function getTotalReviewCount(book){
+  const goodRead = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodRead + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+*/
+
+// map method - loops over original array, returns new array with some operational applied to each element
+const books = getBooks();
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const bookTitles = books.map((book) => book.title);
+bookTitles;
+
+function getTotalReviewCount(book){
+  const goodRead = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodRead + librarything;
+}
+
+const essentialData = books.map((book) => ({
+    title: book.title,
+    author: book.author,
+    reviewsCount: getTotalReviewCount(book),
+}));
+
+essentialData;
+
+// filter method - remove something from array based on a condition and add to new array
+
+const longBooksWithMovies = books
+.filter((book) => book.pages > 500)
+.filter((book) => book.hasMovieAdaptation);
+longBooksWithMovies
+
+const adventureBooks = books.filter((book) => book.genres.includes("adventure")
+).map((book) => book.title);
+adventureBooks;
