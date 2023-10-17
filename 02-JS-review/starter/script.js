@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const data = [
   {
     id: 1,
@@ -236,35 +238,98 @@ console.log(getTotalReviewCount(book));
 */
 
 // map method - loops over original array, returns new array with some operational applied to each element
-const books = getBooks();
+// const books = getBooks();
 
-const x = [1, 2, 3, 4, 5].map((el) => el * 2);
-console.log(x);
+// const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+// console.log(x);
 
-const bookTitles = books.map((book) => book.title);
-bookTitles;
+// const bookTitles = books.map((book) => book.title);
+// bookTitles;
 
-function getTotalReviewCount(book){
-  const goodRead = book.reviews?.goodreads?.reviewsCount;
-  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
-  return goodRead + librarything;
+// function getTotalReviewCount(book){
+//   const goodRead = book.reviews?.goodreads?.reviewsCount;
+//   const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+//   return goodRead + librarything;
+// }
+
+// const essentialData = books.map((book) => ({
+//     title: book.title,
+//     author: book.author,
+//     reviewsCount: getTotalReviewCount(book),
+// }));
+
+// essentialData;
+
+// // filter method - remove something from array based on a condition and add to new array
+
+// const longBooksWithMovies = books
+// .filter((book) => book.pages > 500)
+// .filter((book) => book.hasMovieAdaptation);
+// longBooksWithMovies
+
+// const adventureBooks = books.filter((book) => book.genres.includes("adventure")
+// ).map((book) => book.title);
+// adventureBooks;
+
+// // reduce method - used to boil elements down to a single number
+// // acc = accumulator (current value of what will be final value)
+// const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0);
+// pagesAllBooks;
+
+// // sort method - mutates (changes original array) - (not functional)
+
+// const z = [3, 7, 1, 9, 6];
+// const sorted = z.slice().sort((a, b) => a - b);
+// sorted;
+// z;
+
+// const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+// sortedByPages
+
+// // immutable arrays
+
+// // 1) add a new object to array
+// const newBook = {
+//   id: 6,
+//   title: "Harry Potter and the Chamber of Secrets",
+//   author: "J.K. Rowling",
+// };
+
+// const booksAfterAdd = [...books, newBook];
+// booksAfterAdd
+
+// // 2) delete an object from array
+// const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3);
+// booksAfterDelete
+
+// // 3) update an object in the array
+// // update one property in one object of the array
+// const booksAfterUpdate = booksAfterDelete.map((book) =>
+//   book.id === 1 ? {...book, pages: 1 } : book
+//   );
+
+//   booksAfterUpdate
+
+// asynchronous js
+
+// promises
+// fetch("https://jsonplaceholder.typicode.com/todos")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data))
+//   .catch((error) => console.error("Error:", error));
+
+
+// console.log('dennis');
+
+async function getToDos(){
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await res.json();
+  console.log(data);
+
+  return data;
 }
 
-const essentialData = books.map((book) => ({
-    title: book.title,
-    author: book.author,
-    reviewsCount: getTotalReviewCount(book),
-}));
+const todos = getToDos();
+console.log(todos)
 
-essentialData;
-
-// filter method - remove something from array based on a condition and add to new array
-
-const longBooksWithMovies = books
-.filter((book) => book.pages > 500)
-.filter((book) => book.hasMovieAdaptation);
-longBooksWithMovies
-
-const adventureBooks = books.filter((book) => book.genres.includes("adventure")
-).map((book) => book.title);
-adventureBooks;
+console.log("dennis");
