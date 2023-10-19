@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const pizzaData = [
   {
@@ -47,42 +47,75 @@ const pizzaData = [
   },
 ];
 
-function App(){
+function App() {
   return (
-  <div className="container">
-    <Header />
-    <Menu />
-    <Footer />
-
-  </div>
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
   );
 }
 
-function Header(){
-  const style = {color: 'red', fontSize: '36px',
-  textTransform: "uppercase"};
+function Header() {
+  // const style = {color: 'red', fontSize: '36px',
+  // textTransform: "uppercase"};
 
   return (
     <header className="header">
-      <h1 >
-        Fast React Pizza Company
-      </h1>
+      <h1>Fast React Pizza Company</h1>
     </header>
   );
 }
 
-function Menu (){
+// when you render data via map, each element needs a unique key property
+function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+
   return (
     <main className="menu">
-    <h2>Our Menu</h2>
-    <Pizza />
-    <Pizza />
-    <Pizza />
-  </main>
+      <h2>Our Menu</h2>
+      {numPizzas > 0 && ( // always have true/false condition on left
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
+
+      {/* <Pizza
+        name="Pizza Spinaci"
+        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      />
+      <Pizza
+        name="Pizza Funghi"
+        ingredients="Tomato, mushrooms"
+        photoName="pizzas/funghi.jpg"
+        price={15}
+      /> */}
+    </main>
   );
 }
 
-function Footer(){
+function Pizza(props) {
+  console.log(props);
+
+  return (
+    <div className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <li>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price}</span>
+      </li>
+    </div>
+  );
+}
+
+function Footer() {
   // return React.createElement('footer', null, "We're currently open.")
 
   const hour = new Date().getHours();
@@ -95,27 +128,21 @@ function Footer(){
   // else alert("Sorry we're closed!");
 
   return (
-  <footer className="footer">
-    {new Date().toLocaleTimeString()} - We're currently open.
-  </footer>
-  );
-}
-
-function Pizza(){
-  return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h3>Pizza Spinaci</h3>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
   );
 }
 
 // React v18
 // select root so app can render inside index.html root element
-const root = ReactDOM.createRoot(document.getElementById
-  ("root"));
-  root.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
