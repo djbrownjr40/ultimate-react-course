@@ -6,11 +6,19 @@ const initialItems = [
 ];
 
 export default function App() {
+  // items needs to be in the App parent so it can be passed from Form to Packing List
+  const [items, setItems] = useState([]);
+
+  function handleAddItems(item) {
+    setItems(items=> [...items, item]);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItems={handleAddItems} />
+      {/* // items is added as a prop so it can be passed from the Form */}
+      <PackingList items={items} />
       <Stats />
     </div>
   );
@@ -20,7 +28,7 @@ function Logo() {
   return <h1>🏝️ Far Away 🧳</h1>;
 }
 
-function Form() {
+function Form({onAddItems}) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -32,6 +40,8 @@ function Form() {
 
     const newItem = {description, quantity, packed: false, id: Date.now() };
     console.log(newItem);
+
+    onAddItems (newItem);
 
     setDescription('');
     setQuantity(1);
@@ -62,11 +72,11 @@ function Form() {
   );
 }
 
-function PackingList() {
+function PackingList({ items }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
+        {items.map((item) => (
           // Item = name of component;
           // item = name of prop;
           // {item} = object itself - argument of callback function in each iteration over the array
