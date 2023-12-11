@@ -315,6 +315,8 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     Genre: genre,
   } = movie;
 
+  console.log(title);
+
   function handleAddWatched() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -345,6 +347,16 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     },
     [selectedId]
   );
+
+  useEffect(function(){
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+
+    return function(){
+      document.title = "usePopcorn";
+      console.log(`clean up effect for movie ${title}`)
+    }
+  },[title])
 
   return (
     <div className="details">
@@ -417,11 +429,11 @@ function WatchedSummary({ watched, onDeleteWatched }) {
         </p>
         <p>
           <span>⭐️</span>
-          <span>{avgImdbRating}</span>
+          <span>{avgImdbRating.toFixed(2)}</span>
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>{avgUserRating.toFixed(2)}</span>
         </p>
         <p>
           <span>⏳</span>
